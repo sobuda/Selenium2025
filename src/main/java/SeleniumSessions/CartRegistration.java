@@ -30,7 +30,7 @@ public class CartRegistration {
 		eUtil.customGetDomProperty(lNameBy, "value");
 
 		By emailBy = By.xpath("//*[@id=\"input-email\"]");
-		eUtil.doSendKeys(emailBy, "kirann0400@gmail.com");
+		eUtil.doSendKeys(emailBy, "kiran8945@gmail.com");
 		eUtil.customGetDomProperty(emailBy, "value");
 
 		By telBy = By.cssSelector("#input-telephone");
@@ -80,7 +80,7 @@ public class CartRegistration {
 		By logoBy = By.className("img-responsive");
 		eUtil.doClick(logoBy);
 
-		bUtil.browserQuit();
+		//bUtil.browserQuit();
 
 	}
 

@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 public class ElementUtil {
 
@@ -66,6 +67,8 @@ public class ElementUtil {
 		System.out.println(attributeVal);
 		return attributeVal;
 	}
+	
+	//================GET WEBELEMENTS USING BY LOCATORS===================
 
 	public WebElement getElement(By locator) {
 		return driver.findElement(locator);
@@ -117,9 +120,113 @@ public class ElementUtil {
 		} else
 			return false;
 	}
+	
+	//==============SELECT DROPDOWN UTILS=================
+	
+	
+	public  boolean indexSelect(By locator, int index) {
+		Select dropDown = new Select(getElement(locator));
+		try {
+			dropDown.selectByIndex(index);
+			return true;
+		} catch (NoSuchElementException e) {
+			System.out.println("Index not Found: " + index);
+			return false;
+		}
+	}
+
+	public  boolean valueSelect(By locator, String value) {
+		Select dropDown = new Select(getElement(locator));
+		try {
+			dropDown.selectByValue(value);
+			return true;
+		} catch (NoSuchElementException e) {
+			System.out.println("value Not Found: " + value);
+			return false;
+		}
+	}
+
+	public  boolean visibleTextSelect(By locator, String visibleText) {
+		Select dropDown = new Select(getElement(locator));
+		try {
+
+			dropDown.selectByVisibleText(visibleText);
+			return true;
+		} catch (NoSuchElementException e) {
+			System.out.println("VisibleText Not Found: " + visibleText);
+			return false;
+		}
+
+	}
+
+	public  boolean partialVisibleTextSelect(By locator, String partialText) {
+		Select dropDown = new Select(getElement(locator));
+		try {
+			dropDown.selectByContainsVisibleText(partialText);
+			return true;
+		} catch (NoSuchElementException e) {
+			System.out.println("PartialText Not Found: " + partialText);
+			return false;
+		}
+
+	}
+	
+	public  int getOptionsSize(List<WebElement> options) {
+		return options.size();
+	}
+	
+	public  List<String> getAllOptions(By locator) {
+		WebElement dropDown = getElement(locator);
+		Select sel = new Select(dropDown);
+		List<WebElement> options = sel.getOptions();
+		List<String> optionsTextList = new ArrayList<String>();
+		System.out.println(getOptionsSize(options));
+		for(WebElement e: options) {
+			String text = e.getText();
+			optionsTextList.add(text.trim());
+		}
+		return optionsTextList;
+	}
+
+	public boolean selectDropDownValue(String value, By locator) {
+		 List<String> optionsText = getAllOptions(locator);
+		 if(optionsText.contains(value)) {
+			 for(String e: optionsText) {
+				 if(e.equals(value)) {
+					 getElement(locator);
+					 System.out.println(e);
+				 }
+			 }
+			 return true;
+		 }
+		 else {
+			 return false;
+		 }
+		
+	}
+	public  boolean selectDropDownValue(By locator,String value) {
+		WebElement dropDown = getElement(locator);
+		Select sel = new Select(dropDown);
+		List<WebElement> options = sel.getOptions();
+		boolean flag = false;
+		for(WebElement e: options) {
+			String text = e.getText();
+			if(text.equals(value)) {
+				e.click();
+				System.out.println(text);
+				flag = true;
+				break;
+			}
+		}
+		return flag;
+	}
+	
+	//================GET WEBELEMENTS USING BY LOCATORS===================
 
 	public List<WebElement> getElements(By locator) {
 		return driver.findElements(locator);
 	}
+	
+	
 
 }

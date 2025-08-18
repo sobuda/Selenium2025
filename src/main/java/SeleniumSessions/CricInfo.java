@@ -11,21 +11,38 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class CricInfo {
 
 	static WebDriver driver;
-	
+
 	public static void main(String[] args) {
 
 		driver = new ChromeDriver();
 		driver.get("https://www.espncricinfo.com/series/the-hundred-men-s-competition-2025-1471000/northern-superchargers-men-vs-birmingham-phoenix-men-14th-match-1471015/full-scorecard");
 		
 		String name = "Benny Howell";
-		By xpath = By.xpath("//span[contains(text(),'"+name+"')]/ancestor::tr//td");
-		List<WebElement> cricInfo = driver.findElements(xpath);
-		List<String> tdList = new ArrayList<String>();
+		String xpathText = "//span[contains(text(),'"+name+"')]/ancestor::tr/td";
+		By xpath = By.xpath(xpathText);
 		
+		List<WebElement> cricInfo = driver.findElements(xpath);
+		
+		List<String> tdList = new ArrayList<String>();
+		int count =0;
 		for(WebElement e:cricInfo) {
+			
 			String td = e.getText();
+			
+			if(td.trim().equals(name)) {
+				count++;
+				if(count==2) {
+					System.out.println();
+				}
+			}
 			tdList.add(td);
 			System.out.print(td+"    ");
+			
+			
+			//span[contains(text(),'Dan Lawrence')]/ancestor::td/following-sibling::td
+			
+			
+			
 		}
 		
 	}
